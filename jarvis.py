@@ -1,12 +1,10 @@
-# JARVIS Lite - Offline Assistant with Text + Voice
-# Save this file as jarvis.py and run with: python jarvis.py
-
+# JARVIS Lite - Offline Assistant with Text + Voices 
 import datetime
 import os
 import webbrowser
 import random
 
-# ---------- OPTIONAL VOICE LIBRARIES ----------
+#VOICE libraries (failed to install now might do it later)
 try:
     import pyttsx3
     TTS_AVAILABLE = True
@@ -18,14 +16,12 @@ try:
     SR_AVAILABLE = True
 except ImportError:
     SR_AVAILABLE = False
-
-
-# ---------- TEXT TO SPEECH ----------
+#text to speech
 if TTS_AVAILABLE:
     engine = pyttsx3.init()
     engine.setProperty("rate", 175)   # speaking speed
-    # You can customize voice if you want:
-    # voices = engine.getProperty("voices")
+    # can customize 
+    # voices = engine.getProperty("voices") - module (can be changed)
     # engine.setProperty("voice", voices[1].id)  # try female/male
 else:
     engine = None
@@ -38,11 +34,10 @@ def speak(text):
             engine.say(text)
             engine.runAndWait()
         except:
-            # If any issue with audio, just ignore and continue
+            # If any issue with audio,  ignore and continue
             pass
 
-
-# ---------- BASIC UTILITIES ----------
+#Basic things Like open apps , time , date 
 def get_time():
     return datetime.datetime.now().strftime("%H:%M:%S")
 
@@ -76,7 +71,7 @@ def open_app(app_name):
         speak("App not found. Try 'open notepad' or 'open calculator'.")
 
 
-# ---------- NOTES ----------
+#notes section 
 def write_note():
     speak("What should I write in the note?")
     text = input("Note: ")
@@ -99,7 +94,7 @@ def read_notes():
         speak("No notes found yet.")
 
 
-# ---------- TO-DO MANAGER ----------
+# WORK or TASKS 
 def todo_manager():
     speak("To-do manager: 1. Add task  2. View tasks  3. Clear tasks")
     choice = input("Choose an option (1/2/3): ").strip()
@@ -121,7 +116,7 @@ def todo_manager():
                     print("----------------------")
                 else:
                     speak("Your to-do list is empty.")
-        except FileNotFoundError:
+        except FileNotFoundError :
             speak("No tasks found yet.")
 
     elif choice == "3":
@@ -129,10 +124,10 @@ def todo_manager():
         speak("All tasks cleared.")
 
     else:
-        speak("Invalid choice in to-do manager.")
+        speak("Invalif choice in to-do manager.")
 
 
-# ---------- JOKES ----------
+# jokes taken from ai
 def crack_joke():
     jokes = [
         "Why don't programmers like nature? Too many bugs.",
@@ -144,17 +139,17 @@ def crack_joke():
     speak(random.choice(jokes))
 
 
-# ---------- COMMAND HISTORY ----------
+#cmd history
 def save_history(command):
     try:
         with open("history.txt", "a", encoding="utf-8") as f:
             f.write(command + "\n")
     except:
-        # Don't crash if file can't be written
+        # did not crash if the file is not eritten
         pass
 
 
-# ---------- VOICE INPUT ----------
+# VOIce input ()
 def take_voice_command():
     """Listen from microphone and return recognized text."""
     if not SR_AVAILABLE:
@@ -187,7 +182,7 @@ def show_help():
     help_text = """
 Available Commands:
 - time               -> show current time
-- date               -> show today's date
+- date                -> show today's date
 - google <query>     -> search on Google
 - youtube <query>    -> search on YouTube
 - open notepad       -> open Notepad
